@@ -42,10 +42,13 @@ $memb       = $update->message->message_id;
 $game       = $update->message->game; 
 $user = $message->from->username; 
 $name = $message->from->first_name;
+$deve = 493160132;
 $t =$message->chat->title;
+$new_member = $update->message->new_chat_member;
+$left = $update->message->left_chat_member;
 $rep = $message->reply_to_message;
 $msgs = json_decode(file_get_contents('msgs.json'),true);
-
+$textmsg = $message->text;
 $chat_id2 = $update->callback_query->message->chat->id;
 $re_user = $update->message->reply_to_message->from->username;
 $user_id = $update->message->from->id;
@@ -257,6 +260,16 @@ $re_user    = $update->message->reply_to_message->from->username;
       ]);
    }
  
+ if($message->photo && is_dir("mute")){
+ bot('deletemessage',[
+'chat_id'=>$chat_id,
+'message_id'=>$message_id
+]);
+bot('sendmessage',[
+'chat_id'=>$chat_id,
+'text'=>"عزيزي ممنوع الصور تم قفلها$name \n معرفك @$username"
+]);
+}
    if($text == "/open photo" or $text == "فتح الصور"){
     file_put_contents("data/$chat_id.txt", "o\n$sticker1\n$contact1\n$doc1\n$fwd1\n$voice1\n$link1\n$audio1\n$video1\n$tag1\n$mark1\n$bots1");
     bot('sendMessage',[
@@ -284,6 +297,17 @@ $re_user    = $update->message->reply_to_message->from->username;
 'disable_web_page_preview'=>true,
       ]);
    }
+   
+   if($message->sticker && is_dir("mute")){
+ bot('deletemessage',[
+'chat_id'=>$chat_id,
+'message_id'=>$message_id
+]);
+bot('sendmessage',[
+'chat_id'=>$chat_id,
+'text'=>"ممنوع الملصقات انتبه عزيزي$name \n معرفك @$username"
+]);
+}
        if($text == "/open sticker" or $text == "فتح الملصقات"){
     file_put_contents("data/$chat_id.txt", "$photo1\no\n$contact1\n$doc1\n$fwd1\n$voice1\n$link1\n$audio1\n$video1\n$tag1\n$mark1\n$bots1");
     bot('sendMessage',[
@@ -310,6 +334,17 @@ $re_user    = $update->message->reply_to_message->from->username;
 'disable_web_page_preview'=>true,
       ]);
    }
+   
+   if($message->contact && is_dir("mute")){
+ bot('deletemessage',[
+'chat_id'=>$chat_id,
+'message_id'=>$message_id
+]);
+bot('sendmessage',[
+'chat_id'=>$chat_id,
+'text'=>"ممنوع عزيزي ارسال جهات الاتصال في المجموعه  $name \n معرفك @$username"
+]);
+}
  if($text == "/open contact" or $text == "فتح الجهات"){
     file_put_contents("data/$chat_id.txt", "$photo1\n$sticker1\no\n$doc1\n$fwd1\n$voice1\n$link1\n$audio1\n$video1\n$tag1\n$mark1\n$bots1");
     bot('sendMessage',[
@@ -388,6 +423,17 @@ if($text == "/lock fwd" or $text == "قفل التوجيه"){
 'disable_web_page_preview'=>true,
       ]);
    }
+   
+   if($message->voice && is_dir("mute")){
+ bot('deletemessage',[
+'chat_id'=>$chat_id,
+'message_id'=>$message_id
+]);
+bot('sendmessage',[
+'chat_id'=>$chat_id,
+'text'=>"ممنوع البصمات عزيزي$name \n معرفك @$username"
+]);
+}
      if($text == "/open voice" or $text == "فتح البصمات"){
     file_put_contents("data/$chat_id.txt", "$photo1\n$sticker1\n$contact1\n$doc1\n$fwd1\no\n$link1\n$audio1\n$video1\n$tag1\n$mark1\n$bots1");
     bot('sendMessage',[
@@ -427,6 +473,17 @@ if($text == "/lock fwd" or $text == "قفل التوجيه"){
 'disable_web_page_preview'=>true,
       ]);
    }
+   
+   if(preg_match('/^(.*)([Hh]ttp|[Hh]ttps|t.me)(.*)|([Hh]ttp|[Hh]ttps|t.me)(.*)|(.*)([Hh]ttp|[Hh]ttps|t.me)|(.*)[Tt]elegram.me(.*)|[Tt]elegram.me(.*)|(.*)[Tt]elegram.me|(.*)[Tt].me(.*)|[Tt].me(.*)|(.*)[Tt].me/',$text) ){
+bot('deleteMessage',[
+'chat_id'=>$chat_id,
+'message_id'=>$message->message_id
+  ]);
+bot('sendmessage',[
+'chat_id'=>$chat_id,
+'text'=>"عہہزيہزي لا ادز  روابط لاﮩ'ٰۗ  ابہو:گ اشعله'ٰۗﮩ'ٰۗ$name \n معرفك @$username"
+]);
+}
    if($text == "/lock audio" or $text == "قفل الصوت"){
     file_put_contents("data/$chat_id.txt", "$photo1\n$sticker1\n$contact1\n$doc1\n$fwd1\n$voice1\n$link1\nl\n$video1\n$tag1\n$mark1\n$bots1");
     bot('sendMessage',[
@@ -466,6 +523,17 @@ if($text == "/lock fwd" or $text == "قفل التوجيه"){
 'disable_web_page_preview'=>true,
       ]);
    }
+   
+   if($message->video && is_dir("mute")){
+ bot('deletemessage',[
+'chat_id'=>$chat_id,
+'message_id'=>$message_id
+]);
+bot('sendmessage',[
+'chat_id'=>$chat_id,
+'text'=>"ممنوع الفيديو عزيزي $name \n معرفك @$username"
+]);
+}
    if($text == "/open video" or $text == "فتح الفيديو"){
     file_put_contents("data/$chat_id.txt", "$photo1\n$sticker1\n$contact1\n$doc1\n$fwd1\n$voice1\n$link1\n$audio1\no\n$tag1\n$mark1\n$bots1");
     bot('sendMessage',[
@@ -1033,11 +1101,42 @@ bot('sendMessage',[
 'reply_markup'=>json_encode([
 'inline_keyboard'=>[
 
-        [['text' => "Github Api (التوكن)", 'url' => "https://github.com/moodlIMyIl/TshAkEapi"]],
-        [['text' => "Github Cli (الرقم)", 'url' => "https://github.com/moodlIMyIl/TshAkE"]],
-        [['text' => "قناه السورس", 'url' => "https://t.me/css_1"]],
-        [['text' => "مطور السورس",'url' => "https://t.me/kill_7frind"]],
+        [['text' => "رابط السورس", 'url' => "https://github.com/TEEMKroner/TESHAKE.PHP"]],
+        [['text' => "قناه السورس", 'url' => "https://t.me/DEV_1IRAQ"]],
+        [['text' => "مطور ميمو",'url' => "https://t.me/MEMO_O1"]],
+        [['text' => "مطور الرائد الحربي",'url' => "https://t.me/kill_7frind"]],
 ]
 ])
 ]);
+}
+
+$time = time() + (979 * 11 + 1 + 30);
+if($text == "الوقت"){
+bot('sendMessage',[
+'chat_id'=>$chat_id,
+'text'=>"🕛 البلد : العراق" . "\n" . "🕛 الساعة : " . date('g', $time) . "\n" . "🕛 الدقيقة : " . date('i', $time),
+'reply_to_message_id'=>$message->message_id,
+]);
+}
+
+if($new_member){ 
+bot('sendMessage',[ 
+'chat_id'=>$chat_id, 
+'message_id'=>$message->message_id, 
+'text'=>"<b>نووووورت المجموعه  ⚜🌬</b> 
+<b>ووووردايه </b>  
+<b>التزم بقوانين المجموعه</b>",
+'parse_mode'=>"html", 
+'reply_to_message_id'=>$message->message_id,
+]); 
+}
+
+if($left){ 
+bot('sendMessage',[ 
+'chat_id'=>$chat_id, 
+'message_id'=>$message->message_id, 
+'text'=>"<b>اللللللللله االللللله وياك  سلمنه ع اهل</b>", 
+'reply_to_message_id'=>$message->message_id,
+'parse_mode'=>"html", 
+]); 
 }
